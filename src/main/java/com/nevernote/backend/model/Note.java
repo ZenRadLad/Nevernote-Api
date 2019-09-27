@@ -13,6 +13,10 @@ public class Note {
     private String title;
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name="notebook_id")
+    private Notebook notebook;
+
     @Column(name="creation_date", nullable = false, updatable = false)
     private Date creationDate;
 
@@ -68,5 +72,17 @@ public class Note {
 
     public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", notebook=" + notebook +
+                ", creationDate=" + creationDate +
+                ", lastModificationDate=" + lastModificationDate +
+                '}';
     }
 }

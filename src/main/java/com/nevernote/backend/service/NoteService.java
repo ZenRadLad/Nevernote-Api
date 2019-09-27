@@ -16,8 +16,11 @@ public class NoteService {
 
     private final Logger logger = LoggerFactory.getLogger(NoteService.class);
 
-    @Autowired
     private NoteRepository noteRepository;
+
+    public NoteService(NoteRepository noteRepository){
+        this.noteRepository = noteRepository;
+    }
 
     public List<Note> getAllNotes() {
         return noteRepository.findAll();
@@ -26,11 +29,11 @@ public class NoteService {
     public void createNote(Note note) {
         note.setCreationDate(new Date());
         noteRepository.save(note);
-        logger.info("Note created succesfuly : {}", note);
+        logger.info("Note created succesfuly : {}", note.toString());
     }
 
-    public void deleteNote(Long id) {
-        Note note = noteRepository.findById(id)
+    public void deleteNote(Long id) throws ResourceNotFoundException {
+        noteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
         noteRepository.deleteById(id);
         logger.info("Note deleted succesfuly.");
@@ -46,7 +49,7 @@ public class NoteService {
         logger.info("Note updated succesfuly.");
     }
 
-    public Note getNoteById(Long id) {
+    public Note getNoteById(Long id) throws ResourceNotFoundException {
         return noteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
     }

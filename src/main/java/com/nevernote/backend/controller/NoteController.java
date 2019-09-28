@@ -2,7 +2,7 @@ package com.nevernote.backend.controller;
 
 import com.nevernote.backend.model.Note;
 import com.nevernote.backend.service.NoteService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,27 +17,27 @@ public class NoteController {
     }
 
     @GetMapping("/notes")
-    public List<Note> getAllNotes(){
+    public ResponseEntity<List<Note>> getAllNotes(){
         return noteService.getAllNotes();
     }
 
     @PostMapping("/notes")
-    public void createNote(@RequestBody  Note note){
-        noteService.createNote(note);
+    public ResponseEntity<Note> createNote(@RequestBody  Note note){
+        return noteService.createNote(note);
     }
 
     @PutMapping("/notes/{id}")
-    public void updateNote(@PathVariable Long id, @RequestBody  Note note){
-        noteService.updateNote(id, note);
+    public ResponseEntity<Note> updateNote(@PathVariable Long id, @RequestBody  Note note){
+        return noteService.updateNote(id, note);
     }
 
     @DeleteMapping("/notes/{id}")
-    public void deleteNote(@PathVariable Long id){
-        noteService.deleteNote(id);
+    public ResponseEntity<Note> deleteNote(@PathVariable Long id){
+        return noteService.deleteNote(id);
     }
 
     @GetMapping("/notes/{id}")
-    public Note getNoteById(@PathVariable Long id){
+    public ResponseEntity<Note> getNoteById(@PathVariable Long id){
         return noteService.getNoteById(id);
     }
 }

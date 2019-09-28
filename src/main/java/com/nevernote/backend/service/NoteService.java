@@ -3,10 +3,12 @@ package com.nevernote.backend.service;
 import com.nevernote.backend.exception.ResourceNotFoundException;
 import com.nevernote.backend.model.Note;
 import com.nevernote.backend.repository.NoteRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.Date;
 import java.util.List;
@@ -14,43 +16,61 @@ import java.util.List;
 @Service
 public class NoteService {
 
-    private final Logger logger = LoggerFactory.getLogger(NoteService.class);
-
     private NoteRepository noteRepository;
 
+    @Autowired
     public NoteService(NoteRepository noteRepository){
+        Assert.notNull(noteRepository, "NoteRepository must not be null!");
         this.noteRepository = noteRepository;
     }
 
-    public List<Note> getAllNotes() {
-        return noteRepository.findAll();
+    public ResponseEntity<List<Note>> getAllNotes() {
+        List<Note> notes = noteRepository.findAll();
+        return new ResponseEntity<>(notes, HttpStatus.OK);
     }
 
-    public void createNote(Note note) {
-        note.setCreationDate(new Date());
-        noteRepository.save(note);
-        logger.info("Note created succesfuly : {}", note.toString());
+    public ResponseEntity<Note> createNote(Note note) {
+        if(null != note.getTitle() && note.getTitle().length() > 0) {
+            note.setCreationDate(new Date());
+            Note newNote = noteRepository.saveAndFlush(note);
+            return new ResponseEntity<>(newNote, HttpStatus.CREATED);
+        } else {
+            throw new ResourceNotFoundException("Note", "id", note.getId());
+        }
     }
 
-    public void deleteNote(Long id) throws ResourceNotFoundException {
+    public ResponseEntity<Note> deleteNote(Long id) throws ResourceNotFoundException {
         noteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
         noteRepository.deleteById(id);
-        logger.info("Note deleted succesfuly.");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);    }
+
+    public ResponseEntity<Note> updateNote(Long id, Note noteEdit) {
+        Note existingNote = findNoteById(id);
+
+        if(null != noteEdit.getTitle() && noteEdit.getTitle().length() > 0) {
+            BeanUtils.copyProperties(noteEdit, existingNote);
+
+            // Ensure ID remains unchanged
+            existingNote.setId(id);
+            existingNote.setLastModificationDate(new Date());
+
+            Note updatedNote = noteRepository.saveAndFlush(existingNote);
+            return new ResponseEntity<>(updatedNote, HttpStatus.OK);
+        } else {
+            throw new ResourceNotFoundException("Note", "id", id);
+        }
     }
 
-    public void updateNote(Long id, Note noteDetails) {
-        Note note = noteRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
-        note.setTitle(noteDetails.getTitle());
-        note.setContent(noteDetails.getContent());
-        note.setLastModificationDate(new Date());
-        noteRepository.save(note);
-        logger.info("Note updated succesfuly.");
+    public ResponseEntity<Note> getNoteById(Long id) {
+        Note getNote = findNoteById(id);
+        return new ResponseEntity<>(getNote, HttpStatus.OK);
     }
 
-    public Note getNoteById(Long id) throws ResourceNotFoundException {
-        return noteRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
+    public Note findNoteById(Long id) {
+        Note existingNote = noteRepository.findById(id).
+                orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));;
+        return existingNote;
     }
+
 }

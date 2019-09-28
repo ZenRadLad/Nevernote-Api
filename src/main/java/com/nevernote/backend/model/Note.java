@@ -1,6 +1,7 @@
 package com.nevernote.backend.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -10,10 +11,14 @@ public class Note {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
+    @NotNull
     private String title;
+
+    @NotNull
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="notebook_id")
     private Notebook notebook;
 

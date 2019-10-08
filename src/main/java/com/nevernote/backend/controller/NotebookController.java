@@ -2,6 +2,7 @@ package com.nevernote.backend.controller;
 
 import com.nevernote.backend.model.Notebook;
 import com.nevernote.backend.service.NotebookService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,30 +17,30 @@ public class NotebookController {
     }
 
     @GetMapping("/notebooks")
-    public List<Notebook> getAllNotebooks(){ return notebookService.getAllNotebooks(); }
+    public ResponseEntity<List<Notebook>> getAllNotebooks(){ return notebookService.getAllNotebooks(); }
 
     @PostMapping("/notebooks")
-    public void createNotebook(@RequestBody Notebook notebook){
-        notebookService.createNotebook(notebook);
+    public ResponseEntity<Notebook> createNotebook(@RequestBody Notebook notebook){
+        return notebookService.createNotebook(notebook);
     }
 
     @PostMapping("/notebooks/{notebookId}/{noteId}")
-    public void addNoteToNotebook(@PathVariable Long noteId, @PathVariable Long notebookId){
-        notebookService.addNoteToNotebook(noteId, notebookId);
+    public ResponseEntity<Notebook> addNoteToNotebook(@PathVariable Long noteId, @PathVariable Long notebookId){
+        return notebookService.addNoteToNotebook(noteId, notebookId);
     }
 
     @PutMapping("/notebooks/{id}")
-    public void updateNotebook(@PathVariable Long id, @RequestBody  Notebook notebook){
-        notebookService.updateNotebook(id, notebook);
+    public ResponseEntity<Notebook> updateNotebook(@PathVariable Long id, @RequestBody Notebook notebook){
+        return notebookService.updateNotebook(id, notebook);
     }
 
     @DeleteMapping("/notebooks/{id}")
-    public void deleteNotebook(@PathVariable Long id){
-        notebookService.deleteNotebook(id);
+    public ResponseEntity<Notebook> deleteNotebook(@PathVariable Long id){
+        return notebookService.deleteNotebook(id);
     }
 
     @GetMapping("/notebooks/{id}")
-    public Notebook getNotebookById(@PathVariable Long id){
+    public ResponseEntity<Notebook> getNotebookById(@PathVariable Long id){
         return notebookService.getNotebookById(id);
     }
 }

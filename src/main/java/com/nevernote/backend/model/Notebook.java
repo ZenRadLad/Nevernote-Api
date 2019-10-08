@@ -1,6 +1,7 @@
 package com.nevernote.backend.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -10,6 +11,8 @@ public class Notebook {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
+    @NotNull
     private String name;
 
     @Column(name="creation_date", nullable = false, updatable = false)
@@ -18,7 +21,7 @@ public class Notebook {
     @Column(name="last_modification_date")
     private Date lastModificationDate;
 
-    @OneToMany(mappedBy = "notebook", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "notebook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Note> notes;
 
     public Notebook() {

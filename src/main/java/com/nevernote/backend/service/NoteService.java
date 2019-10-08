@@ -43,7 +43,8 @@ public class NoteService {
         noteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
         noteRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);    }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     public ResponseEntity<Note> updateNote(Long id, Note noteEdit) {
         Note existingNote = findNoteById(id);
@@ -67,10 +68,9 @@ public class NoteService {
         return new ResponseEntity<>(getNote, HttpStatus.OK);
     }
 
-    public Note findNoteById(Long id) {
-        Note existingNote = noteRepository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));;
-        return existingNote;
+    Note findNoteById(Long id) {
+        return noteRepository.findById(id).
+                orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
     }
 
 }

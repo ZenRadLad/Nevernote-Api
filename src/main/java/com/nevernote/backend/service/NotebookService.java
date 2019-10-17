@@ -1,7 +1,6 @@
 package com.nevernote.backend.service;
 
 import com.nevernote.backend.exception.ResourceNotFoundException;
-import com.nevernote.backend.model.Note;
 import com.nevernote.backend.model.Notebook;
 import com.nevernote.backend.repository.NotebookRepository;
 import org.springframework.beans.BeanUtils;
@@ -12,21 +11,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class NotebookService {
 
     private NotebookRepository notebookRepository;
-    private NoteService noteService;
 
     @Autowired
-    public NotebookService(NotebookRepository notebookRepository, NoteService noteService) {
+    public NotebookService(NotebookRepository notebookRepository) {
         Assert.notNull(notebookRepository, "NotebookRepository must not be null!");
         this.notebookRepository = notebookRepository;
-        this.noteService = noteService;
     }
 
     public  ResponseEntity<List<Notebook>> getAllNotebooks() {
@@ -73,19 +68,8 @@ public class NotebookService {
         return new ResponseEntity<>(getNotebook, HttpStatus.OK);
     }
 
-    private Notebook findNotebookById(Long id) {
+    public Notebook findNotebookById(Long id) {
         return notebookRepository.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Notebook", "id", id));
-    }
-
-
-    public ResponseEntity<Notebook> addNoteToNotebook(Long noteId, Long notebookId) {
-        Note note = noteService.findNoteById(noteId);
-        Notebook notebook = findNotebookById(notebookId);
-        Set<Note> notes = new HashSet<>();
-        notes.add(note);
-        notebook.setNotes(notes);
-        updateNotebook(notebook.getId(), notebook);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

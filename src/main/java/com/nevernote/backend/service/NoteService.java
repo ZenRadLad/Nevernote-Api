@@ -2,6 +2,7 @@ package com.nevernote.backend.service;
 
 import com.nevernote.backend.exception.ResourceNotFoundException;
 import com.nevernote.backend.model.Note;
+import com.nevernote.backend.model.Notebook;
 import com.nevernote.backend.repository.NoteRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,14 @@ import java.util.List;
 public class NoteService {
 
     private NoteRepository noteRepository;
+    private NotebookService notebookService;
+
 
     @Autowired
-    public NoteService(NoteRepository noteRepository){
+    public NoteService(NoteRepository noteRepository, NotebookService notebookService){
         Assert.notNull(noteRepository, "NoteRepository must not be null!");
         this.noteRepository = noteRepository;
+        this.notebookService = notebookService;
     }
 
     public ResponseEntity<List<Note>> getAllNotes() {
@@ -68,9 +72,19 @@ public class NoteService {
         return new ResponseEntity<>(getNote, HttpStatus.OK);
     }
 
-    Note findNoteById(Long id) {
+    private Note findNoteById(Long id) {
         return noteRepository.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
     }
 
+    public ResponseEntity<Note> addNoteToNotebook(Long noteId, Long notebookId) {
+        Note note = findNoteById(noteId);
+        Notebook notebook = notebookService.findNotebookById(notebookId);
+
+        note.setNotebook(notebook);
+        notebook.setLastModificationDate(new Date());
+        updateNote(note.getId(), note);
+
+        return new ResponseEntity<Note>(note, HttpStatus.OK);
+    }
 }

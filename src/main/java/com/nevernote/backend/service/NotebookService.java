@@ -68,7 +68,7 @@ public class NotebookService {
         return new ResponseEntity<>(getNotebook, HttpStatus.OK);
     }
 
-    public Notebook findNotebookById(Long id) {
+    Notebook findNotebookById(Long id) {
         return notebookRepository.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Notebook", "id", id));
     }

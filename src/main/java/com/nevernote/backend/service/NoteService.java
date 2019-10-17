@@ -33,6 +33,11 @@ public class NoteService {
         return new ResponseEntity<>(notes, HttpStatus.OK);
     }
 
+    public ResponseEntity<List<Note>> getNotesByNotebookId(Long notebookId) {
+        List<Note> notes = findNotesByNotebookId(notebookId);
+        return new ResponseEntity<>(notes, HttpStatus.OK);
+    }
+
     public ResponseEntity<Note> createNote(Note note) {
         if(null != note.getTitle() && note.getTitle().length() > 0) {
             note.setCreationDate(new Date());
@@ -86,5 +91,9 @@ public class NoteService {
         updateNote(note.getId(), note);
 
         return new ResponseEntity<Note>(note, HttpStatus.OK);
+    }
+
+    private List<Note> findNotesByNotebookId(Long id) {
+        return noteRepository.findByNotebookId(id);
     }
 }

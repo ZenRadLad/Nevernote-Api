@@ -3,7 +3,6 @@ package com.nevernote.backend.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "note_book")
@@ -20,9 +19,6 @@ public class Notebook {
 
     @Column(name="last_modification_date")
     private Date lastModificationDate;
-
-    @OneToMany(mappedBy = "notebook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Note> notes;
 
     public Notebook() {
     }
@@ -64,14 +60,6 @@ public class Notebook {
         this.lastModificationDate = lastModificationDate;
     }
 
-    public Set<Note> getNotes() {
-        return notes;
-    }
-
-    public void setNotes(Set<Note> notes) {
-        this.notes = notes;
-    }
-
     @Override
     public String toString() {
         return "Notebook{" +
@@ -79,7 +67,6 @@ public class Notebook {
                 ", name='" + name + '\'' +
                 ", creationDate=" + creationDate +
                 ", lastModificationDate=" + lastModificationDate +
-                ", notes=" + notes +
                 '}';
     }
 }

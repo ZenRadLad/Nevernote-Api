@@ -18,15 +18,15 @@ public class Note {
     @NotNull
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="notebook_id")
-    private Notebook notebook;
-
     @Column(name="creation_date", nullable = false, updatable = false)
     private Date creationDate;
 
     @Column(name="last_modification_date")
     private Date lastModificationDate;
+
+    @ManyToOne
+    @JoinColumn(name="notebook_id")
+    private Notebook notebook;
 
     public Note() {
     }
@@ -77,6 +77,14 @@ public class Note {
 
     public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
+    }
+
+    public Notebook getNotebook() {
+        return notebook;
+    }
+
+    public void setNotebook(Notebook notebook) {
+        this.notebook = notebook;
     }
 
     @Override

@@ -3,6 +3,9 @@ package com.nevernote.backend.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "note")
@@ -27,6 +30,13 @@ public class Note {
     @ManyToOne
     @JoinColumn(name="notebook_id")
     private Notebook notebook;
+
+    @ManyToMany
+    @JoinTable(
+            name = "note_tag",
+            joinColumns = @JoinColumn(name = "note_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private Set<Tag> tags = new HashSet<>();
 
     public Note() {
     }
@@ -85,6 +95,36 @@ public class Note {
 
     public void setNotebook(Notebook notebook) {
         this.notebook = notebook;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(Tag tag){
+        this.tags.add(tag);
+    }
+
+    public void removeTag(Tag tag){
+        this.tags.remove(tag);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Note note = (Note) o;
+        return id.equals(note.id) &&
+                title.equals(note.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title);
     }
 
     @Override

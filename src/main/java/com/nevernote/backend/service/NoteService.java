@@ -77,7 +77,7 @@ public class NoteService {
         return new ResponseEntity<>(getNote, HttpStatus.OK);
     }
 
-    private Note findNoteById(Long id) {
+    Note findNoteById(Long id) {
         return noteRepository.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
     }
@@ -90,7 +90,7 @@ public class NoteService {
         notebook.setLastModificationDate(new Date());
         updateNote(note.getId(), note);
 
-        return new ResponseEntity<Note>(note, HttpStatus.OK);
+        return new ResponseEntity<>(note, HttpStatus.OK);
     }
 
     private List<Note> findNotesByNotebookId(Long id) {

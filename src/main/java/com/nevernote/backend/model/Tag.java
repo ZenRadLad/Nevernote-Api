@@ -1,7 +1,12 @@
 package com.nevernote.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tag")
@@ -13,6 +18,10 @@ public class Tag {
 
     @NotNull
     private String name;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy="tags")
+    private Set<Note> notes = new HashSet<>();
 
     public Tag() {
     }
@@ -36,6 +45,28 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Set<Note> notes) {
+        this.notes = notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tag tag = (Tag) o;
+        return id.equals(tag.id) &&
+                name.equals(tag.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override

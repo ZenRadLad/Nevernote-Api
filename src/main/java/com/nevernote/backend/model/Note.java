@@ -18,7 +18,6 @@ public class Note {
     @NotNull
     private String title;
 
-    @NotNull
     private String content;
 
     @Column(name="creation_date", nullable = false, updatable = false)
@@ -31,7 +30,7 @@ public class Note {
     @JoinColumn(name="notebook_id")
     private Notebook notebook;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "note_tag",
             joinColumns = @JoinColumn(name = "note_id", referencedColumnName = "id"),

@@ -1,0 +1,48 @@
+{
+    "APP": {
+        "TITLE" : "Nevernote",
+        "SIDENAV_LINKS" : {
+            "ALL_NOTES" : "Notes",
+            "NOTEBOOKS" : "Notebooks",
+            "TAGS" : "Tags"
+        },
+        "NEW_NOTE" : {
+          "UNTITLED" : "Untitled",
+          "SAVE_NOTE" : "Save",
+          "EDITOR_PH" : "Note content here."
+        },
+        "NOTE_EDIT" : {
+          "NOTE_MOVED_TO_NOTEBOOK" : "Note moved to {{ notebookName }} notebook",
+          "TITLE_PH" : "Give a title to your note"
+        },
+        "SELECT_NOTEBOOK" : {
+          "ADD_NOTE_TO_NOTEBOOK" : "Move to notebook",
+          "FILTER_BY_NOTEBOOK" : "Filter by notebook"
+        },
+        "ALL_NOTES" : {
+            "NEW_NOTE" : "New Note",
+            "ZERO_NOTES" : "There are no notes to display",
+            "SEARCH_NOTES" : "Search",
+            "CONFIRM_DELETE_NOTE" : "Are you sure you want to delete this note ?"
+        },
+        "NOTEBOOKS" : {
+            "NEW_NOTEBOOK" : "New Notebook",
+            "UPDATE_NOTEBOOK" : "Update notebook",
+            "CONFIRM_DELETE_NOTEBOOK" : "Deleting {{ notebookName }} notebook will delete all it's notes !"
+        },
+        "TAGS" : {
+            "NEW_TAG" : "New Tag",
+            "FILTER_BY_TAG" : "Filter by tags",
+            "UPDATE_TAG" : "Update tag",
+            "CONFIRM_DELETE_TAG" : "Are you sure you want to delete {{ tagName }} ?"
+        },
+        "CONFIRMATION_DIALOG" : {
+          "CONFIRM" : "Confirm",
+          "CANCEL" : "Cancel"
+        },
+        "PAGE_NOT_FOUND" : {
+          "BODY" : "This is not the page that you're looking for, pal !"
+        }
+    }
+}
+

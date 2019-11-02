@@ -1,0 +1,48 @@
+{
+    "APP": {
+        "TITLE" : "Nevernote",
+        "SIDENAV_LINKS" : {
+            "ALL_NOTES" : "Notes",
+            "NOTEBOOKS" : "Carnets de Notes",
+            "TAGS" : "Étiquettes"
+        },
+        "NEW_NOTE" : {
+          "UNTITLED" : "Sans titre",
+          "SAVE_NOTE" : "Enregistrer",
+          "EDITOR_PH" : "Ecrivez votre contenu ici."
+        },
+        "NOTE_EDIT" : {
+          "NOTE_MOVED_TO_NOTEBOOK" : "Note déplacée vers le carnet {{ notebookName }}",
+          "TITLE_PH" : "Donnez un titre à votre note"
+        },
+        "SELECT_NOTEBOOK" : {
+          "ADD_NOTE_TO_NOTEBOOK" : "Déplacer vers un carnet",
+          "FILTER_BY_NOTEBOOK" : "Filtrer par carnet"
+        },
+        "ALL_NOTES" : {
+            "NEW_NOTE" : "Nouvelle Note",
+            "ZERO_NOTES" : "Aucune note à afficher",
+            "SEARCH_NOTES" : "Rechercher",
+            "CONFIRM_DELETE_NOTE" : "Êtes-vous sûr de vouloir supprimer cette note ?"
+        },
+        "NOTEBOOKS" : {
+            "NEW_NOTEBOOK" : "Nouveau carnet de notes",
+            "UPDATE_NOTEBOOK" : "Modifier le carnet de notes",
+            "CONFIRM_DELETE_NOTEBOOK" : "La suppression de {{ notebookName }} entraînera la suppression de tous ses notes !"
+        },
+        "TAGS" : {
+            "NEW_TAG" : "Nouvelle Étiquette",
+            "FILTER_BY_TAG" : "Filtrer par étiquettes",
+            "UPDATE_TAG" : "Modifier l'étiquette",
+            "CONFIRM_DELETE_TAG" : "Êtes-vous sûr de vouloir supprimer {{ tagName }} ?"
+        },
+        "CONFIRMATION_DIALOG" : {
+          "CONFIRM" : "Confirmer",
+          "CANCEL" : "Annuler"
+        },
+        "PAGE_NOT_FOUND" : {
+          "BODY" : "Ce n'est pas la page que tu cherches, mon pote !"
+        }
+    }
+}
+

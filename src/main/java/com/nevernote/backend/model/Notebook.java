@@ -24,7 +24,7 @@ public class Notebook {
     private Date lastModificationDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy="notebook", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="notebook", cascade = CascadeType.ALL)
     private Set<Note> notes;
 
     public Notebook() {

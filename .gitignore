@@ -1,3 +1,7 @@
 /ToDo
 .idea/
+/bin/
 /target/
+.classpath
+.settings/
+.project
